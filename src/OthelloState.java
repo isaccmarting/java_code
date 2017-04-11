@@ -13,6 +13,7 @@ public class OthelloState {
     public static final int NOTHING = -1;
     public static final int PLAYER1 = 0;
     public static final int PLAYER2 = 1;
+    public static final int LINE_SCORE = 5; 
     
     public static final String PLAYER_NAMES[] = {"O","X"};
     
@@ -85,11 +86,25 @@ public class OthelloState {
      */
     public int score() {
         int score = 0;
-        for(int i = 0;i<boardSize;i++)
-            for(int j = 0;j<boardSize;j++) {
-                if (board[i][j]==PLAYER1) score++;
-                if (board[i][j]==PLAYER2) score--;
+        for(int i = 1; i < boardSize-1; i++)
+            for(int j = 1; j < boardSize-1; j++) {
+                if (board[i][j] == PLAYER1) score++;
+                if (board[i][j] == PLAYER2) score--;
             }
+        for(int i = 0; i < boardSize; i++)
+        {
+            if(board[i][0] == PLAYER1) score += LINE_SCORE; 
+            if(board[i][boardSize-1] == PLAYER1) score += LINE_SCORE; 
+            if(board[i][0] == PLAYER2) score -= LINE_SCORE;
+            if(board[i][boardSize-1] == PLAYER2) score -= LINE_SCORE; 
+        }
+        for(int j = 0; j < boardSize; j++)
+        {
+            if(board[0][j] == PLAYER1) score += LINE_SCORE; 
+            if(board[boardSize-1][j] == PLAYER1) score += LINE_SCORE; 
+            if(board[0][j] == PLAYER2) score -= LINE_SCORE;
+            if(board[boardSize-1][j] == PLAYER2) score -= LINE_SCORE; 
+        }
         return score;
     }
     
